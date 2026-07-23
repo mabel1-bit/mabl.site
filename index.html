@@ -422,9 +422,24 @@
     </section>
     <!-- ##### NFT Collection Area End ##### -->
 
-    <section class="section-padding-100 clearfix" id="seasons" style="background: #0d0d0d; padding: 60px 0">
-      <div style="width: 100%; overflow: hidden">
-        <img draggable="false" src="./seasons.png" alt="MABL Pictures Seasons - One Big Adventure" style="width: 100%; height: auto; display: block">
+    <section class="section-padding-100 clearfix" id="seasons" style="background: #0d0d0d; padding: 60px 0; position: relative; overflow: hidden">
+      <!-- Tam genişlik bulanık arka fon -->
+      <div style="
+          position: absolute;
+          inset: 0;
+          background-image: url('./seasons.png');
+          background-size: cover;
+          background-position: center 15%;
+          filter: blur(40px) brightness(0.75) saturate(1.2);
+          transform: scale(1.15);
+          z-index: 0;
+        "></div>
+
+      <!-- Net, eski boyutundaki görsel -->
+      <div class="container" style="position: relative; z-index: 1">
+        <div style="max-width: 780px; margin: 0 auto; overflow: hidden; border-radius: 12px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5)">
+          <img draggable="false" src="./seasons.png" alt="MABL Pictures Seasons - One Big Adventure" style="width: 100%; height: auto; display: block">
+        </div>
       </div>
     </section>
 
