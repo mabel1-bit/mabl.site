@@ -682,8 +682,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <!-- WOW.js (scroll animations) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-    <!-- Chart.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 
     <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647;">Scroll Top</a>
 
@@ -703,59 +701,6 @@
       });
     </script>
     <script>
-      var ctx = document.getElementById("tokenPieChart").getContext("2d");
-
-      var g1 = ctx.createLinearGradient(0, 0, 0, 400);
-      g1.addColorStop(0, "#C9A96E");
-      g1.addColorStop(1, "#7A5010");
-
-      var g2 = ctx.createLinearGradient(0, 0, 0, 400);
-      g2.addColorStop(0, "#E8C97A");
-      g2.addColorStop(1, "#8B6220");
-
-      var g3 = ctx.createLinearGradient(0, 0, 0, 400);
-      g3.addColorStop(0, "#A07840");
-      g3.addColorStop(1, "#4A2800");
-
-      var g4 = ctx.createLinearGradient(0, 0, 0, 400);
-      g4.addColorStop(0, "#D4AF37");
-      g4.addColorStop(1, "#6B4A10");
-
-      var g5 = ctx.createLinearGradient(0, 0, 0, 400);
-      g5.addColorStop(0, "#8B6914");
-      g5.addColorStop(1, "#2A1500");
-
-      var tokenPieChart = new Chart(ctx, {
-        type: "doughnut",
-        data: {
-          labels: ["Ecosystem", "Treasury", "Team", "Liquidity", "Marketing"],
-          datasets: [
-            {
-              data: [25, 25, 20, 20, 10],
-              backgroundColor: [g1, g2, g3, g4, g5],
-              borderWidth: 2,
-              borderColor: "#0d0d0d",
-              hoverOffset: 8,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: "65%",
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: function (context) {
-                  return context.label + ": " + context.parsed + "%";
-                },
-              },
-            },
-          },
-        },
-      });
-
       // FAQ Accordion
       document.querySelectorAll(".faq-question").forEach((btn) => {
         btn.addEventListener("click", () => {
