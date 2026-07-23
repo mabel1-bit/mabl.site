@@ -355,8 +355,21 @@
     </section>
 
     <!-- ##### NFT Collection Area Start ##### -->
-    <section class="section-padding-100 clearfix" id="nft-collection" style="background: #0d0d0d">
-      <div class="container">
+    <section class="section-padding-100 clearfix" id="nft-collection" style="background: #0d0d0d; position: relative; overflow: hidden">
+      <!-- Kartların tonlarını harmanlayan bulanık arka fon -->
+      <div style="
+          position: absolute;
+          inset: 0;
+          background-image: url('./nft-collection.jpeg');
+          background-size: cover;
+          background-position: center;
+          filter: blur(60px) saturate(1.4) brightness(0.55);
+          transform: scale(1.2);
+          z-index: 0;
+        "></div>
+      <div style="position: absolute; inset: 0; background: rgba(13, 13, 13, 0.45); z-index: 0"></div>
+
+      <div class="container" style="position: relative; z-index: 1">
         <!-- Başlık -->
         <div class="text-center mb-50">
           <p style="font-size: 11px; letter-spacing: 4px; color: #c9a96e; text-transform: uppercase; margin-bottom: 14px">
