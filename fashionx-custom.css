@@ -6,9 +6,9 @@
 
 .nav-brand { margin-left: -135px; }
 
-.classy-nav-container .nav-brand img, .classy-navbar .nav-brand img, a.nav-brand.light img { height: 130px !important; max-height: 130px !important; width: auto !important; }
+.classy-nav-container .nav-brand img, .classy-navbar .nav-brand img, a.nav-brand.light img { height: 56px !important; max-height: 56px !important; width: auto !important; }
 
-.classy-navbar { height: 120px !important; padding: 10px 30px !important; }
+.classy-navbar { height: 90px !important; padding: 10px 30px !important; }
 
 .classy-nav-container { max-width: 100% !important; padding-left: 0px !important; }
 
