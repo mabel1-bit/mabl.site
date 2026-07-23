@@ -6,9 +6,11 @@
 
 .nav-brand { margin-left: -135px; }
 
-.classy-nav-container .nav-brand img, .classy-navbar .nav-brand img, a.nav-brand.light img { height: 56px !important; max-height: 56px !important; width: auto !important; }
+.classy-nav-container .nav-brand img, .classy-navbar .nav-brand img, a.nav-brand.light img { height: 80px !important; max-height: 80px !important; width: auto !important; }
 
-.classy-navbar { height: 90px !important; padding: 10px 30px !important; }
+.classy-navbar { height: 110px !important; padding: 10px 30px !important; display: flex !important; align-items: center !important; }
+
+.classynav ul li a { font-size: 17px !important; height: 45px !important; line-height: 45px !important; letter-spacing: 0.5px; }
 
 .classy-nav-container { max-width: 100% !important; padding-left: 0px !important; }
 
