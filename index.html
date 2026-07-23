@@ -210,6 +210,10 @@
               <span class="cd-unit">Seconds</span>
             </div>
           </div>
+
+          <p style="color: rgba(255, 255, 255, 0.45); font-size: 13.5px; letter-spacing: 0.5px; margin-top: 24px">
+            An announcement regarding the launch date will be made. Stay tuned.
+          </p>
         </div>
       </div>
     </section>
@@ -420,7 +424,7 @@
 
     <section class="section-padding-100 clearfix" id="seasons" style="background: #0d0d0d; padding: 60px 0">
       <div class="container">
-        <div style="max-width: 780px; margin: 0 auto; overflow: hidden; border-radius: 12px">
+        <div style="overflow: hidden; border-radius: 12px">
           <img draggable="false" src="./seasons.png" alt="MABL Pictures Seasons - One Big Adventure" style="width: 100%; height: auto; display: block">
         </div>
       </div>
@@ -652,6 +656,13 @@
       </div>
     </div>
 
+    <!-- Copyright -->
+    <div style="background: #0a0a0a; border-top: 1px solid rgba(201, 169, 110, 0.1); padding: 22px 0; text-align: center">
+      <p style="color: rgba(255, 255, 255, 0.35); font-size: 13px; margin: 0">
+        © 2026 MabelPictures. All rights reserved.
+      </p>
+    </div>
+
     <!-- ##### Footer Area Start ##### 
 <footer class="footer-area bg-img">
   <div class="footer-content-area mt-0">
@@ -721,41 +732,12 @@
         });
       });
 
-      // Countdown Timer
+      // Countdown Timer (şimdilik sabit 00 - lansman tarihi duyurulmadı)
       (function () {
-        var storageKey = "fashionx_countdown_target";
-        var stored = localStorage.getItem(storageKey);
-        var target;
-
-        if (stored) {
-          target = new Date(parseInt(stored));
-        } else {
-          target = new Date(Date.now() + 20 * 24 * 60 * 60 * 1000);
-          localStorage.setItem(storageKey, target.getTime().toString());
-        }
-
-        function updateCountdown() {
-          var diff = target - Date.now();
-          if (diff <= 0) {
-            ["cd-days", "cd-hours", "cd-minutes", "cd-seconds"].forEach(function (id) {
-              var el = document.getElementById(id);
-              if (el) el.textContent = "00";
-            });
-            return;
-          }
-          var d = Math.floor(diff / 86400000);
-          var h = Math.floor((diff % 86400000) / 3600000);
-          var m = Math.floor((diff % 3600000) / 60000);
-          var s = Math.floor((diff % 60000) / 1000);
-
-          document.getElementById("cd-days").textContent = String(d).padStart(2, "0");
-          document.getElementById("cd-hours").textContent = String(h).padStart(2, "0");
-          document.getElementById("cd-minutes").textContent = String(m).padStart(2, "0");
-          document.getElementById("cd-seconds").textContent = String(s).padStart(2, "0");
-        }
-
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+        ["cd-days", "cd-hours", "cd-minutes", "cd-seconds"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = "00";
+        });
       })();
 
       // Kinetic Text
