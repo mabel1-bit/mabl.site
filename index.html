@@ -144,12 +144,33 @@
 
     <section class="hero-section ico-bg3 relative hidden" id="home" style="background: #0d0d0d; min-height: 85vh !important; padding-bottom: 0 !important; margin-top: 100px;">
       <!-- Background Video -->
-      <video autoplay muted loop playsinline class="hero-video-bg">
+      <video autoplay muted loop playsinline id="heroVideo" class="hero-video-bg">
         <source src="./hero-video.mp4" type="video/mp4">
       </video>
 
       <!-- Overlay -->
       <div class="hero-video-overlay"></div>
+
+      <!-- Ses Aç/Kapat Butonu -->
+      <button id="muteToggleBtn" aria-label="Sesi aç/kapat" style="
+          position: absolute;
+          bottom: 24px;
+          right: 24px;
+          z-index: 3;
+          width: 46px;
+          height: 46px;
+          border-radius: 50%;
+          border: 1px solid rgba(201, 169, 110, 0.5);
+          background: rgba(13, 13, 13, 0.6);
+          color: #c9a96e;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          backdrop-filter: blur(4px);
+        ">
+        <i id="muteIcon" class="fa fa-volume-off" style="font-size: 18px"></i>
+      </button>
 
       <!-- Hero Content -->
       <div class="hero-section-content">
@@ -715,6 +736,25 @@
         if (toggler && menu) {
           toggler.addEventListener("click", function () {
             menu.classList.toggle("menu-on");
+          });
+        }
+      });
+
+      // Hero video ses aç/kapat
+      document.addEventListener("DOMContentLoaded", function () {
+        var video = document.getElementById("heroVideo");
+        var btn = document.getElementById("muteToggleBtn");
+        var icon = document.getElementById("muteIcon");
+        if (video && btn && icon) {
+          btn.addEventListener("click", function () {
+            video.muted = !video.muted;
+            if (!video.muted) {
+              icon.classList.remove("fa-volume-off");
+              icon.classList.add("fa-volume-up");
+            } else {
+              icon.classList.remove("fa-volume-up");
+              icon.classList.add("fa-volume-off");
+            }
           });
         }
       });
