@@ -169,7 +169,15 @@
           cursor: pointer;
           backdrop-filter: blur(4px);
         ">
-        <i id="muteIcon" class="fa fa-volume-off" style="font-size: 18px"></i>
+        <span id="mutePulse" style="
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px solid #c9a96e;
+            animation: mutePulseAnim 1.8s ease-out infinite;
+            pointer-events: none;
+          "></span>
+        <i id="muteIcon" class="fa fa-volume-off" style="font-size: 18px; position: relative; z-index: 1"></i>
       </button>
 
       <!-- Hero Content -->
@@ -745,18 +753,21 @@
         var video = document.getElementById("heroVideo");
         var btn = document.getElementById("muteToggleBtn");
         var icon = document.getElementById("muteIcon");
-        if (video && btn && icon) {
-          btn.addEventListener("click", function () {
-            video.muted = !video.muted;
-            if (!video.muted) {
-              icon.classList.remove("fa-volume-off");
-              icon.classList.add("fa-volume-up");
-            } else {
-              icon.classList.remove("fa-volume-up");
-              icon.classList.add("fa-volume-off");
-            }
-          });
-        }
+        var pulse = document.getElementById("mutePulse");
+        if (!video || !btn || !icon) return;
+
+        btn.addEventListener("click", function () {
+          video.muted = !video.muted;
+          if (!video.muted) {
+            icon.classList.remove("fa-volume-off");
+            icon.classList.add("fa-volume-up");
+          } else {
+            icon.classList.remove("fa-volume-up");
+            icon.classList.add("fa-volume-off");
+          }
+          // İlk tıklamadan sonra dikkat çekici animasyonu durdur
+          if (pulse) pulse.style.display = "none";
+        });
       });
     </script>
     <script>
