@@ -381,3 +381,5 @@
 .classynav ul li .dropdown li a { color: rgb(255, 255, 255) !important; padding: 11px 24px !important; font-size: 14px !important; height: auto !important; line-height: normal !important; }
 
 .classynav ul li .dropdown li a:hover { color: rgb(201, 169, 110) !important; background: rgba(201, 169, 110, 0.08) !important; }
+
+@keyframes mutePulseAnim { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.6); opacity: 0; } }
