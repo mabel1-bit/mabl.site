@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>MABL Airdrop Leaderboard</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    --bg:#001d15;
+    --card:#053327;
+    --accent:#ffcf4d;
+    --text:#eafff5;
+    --muted:#9fcbb9;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Poppins', Arial, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    padding:40px 16px 80px;
+  }
+  .wrap{max-width:640px;margin:0 auto;}
+  h1{font-size:28px;margin-bottom:4px;}
+  p.sub{color:var(--muted);margin-top:0;margin-bottom:24px;}
+  .badge{
+    display:inline-block;
+    background:rgba(255,207,77,0.15);
+    color:var(--accent);
+    font-size:11px;
+    padding:4px 10px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:16px;
+    padding:8px 24px;
+  }
+  table{width:100%;border-collapse:collapse;}
+  th{
+    text-align:left;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    color:var(--muted);
+    padding:14px 8px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+  }
+  th.num, td.num{text-align:right;}
+  td{
+    padding:12px 8px;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    font-size:14px;
+  }
+  tr:last-child td{border-bottom:none;}
+  .rank{font-weight:700;color:var(--accent);width:36px;}
+  .rank.top1{color:#ffd76b;}
+  .rank.top2{color:#dfe8e2;}
+  .rank.top3{color:#e0ab6b;}
+  .addr{font-family:monospace;font-size:13px;}
+  .pts{font-weight:700;color:var(--accent);}
+  .status-msg{color:var(--muted);font-size:13px;padding:16px 8px;}
+  .refresh-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .btn{
+    background:transparent;
+    color:var(--accent);
+    border:1px solid var(--accent);
+    border-radius:8px;
+    padding:8px 14px;
+    font-size:13px;
+    cursor:pointer;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">🚧 TEST ENVIRONMENT — not live yet</span>
+  <h1>MABL Airdrop Leaderboard</h1>
+  <p class="sub">Top point earners so far.</p>
+
+  <div class="refresh-row">
+    <div></div>
+    <button class="btn" id="refreshBtn">Refresh</button>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th class="rank">#</th>
+          <th>Wallet</th>
+          <th class="num">Points</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboardBody">
+        <tr><td colspan="3" class="status-msg">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://kpgtagvkaetckiwzxeoy.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable__F-p0BZXrrkbpacYF5BQHQ_Do7HkxNo";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function shortenAddress(addr){
+  if (!addr || addr.length <= 12) return addr;
+  return addr.slice(0, 6) + '...' + addr.slice(-4);
+}
+
+function rankClass(i){
+  if (i === 0) return 'rank top1';
+  if (i === 1) return 'rank top2';
+  if (i === 2) return 'rank top3';
+  return 'rank';
+}
+
+async function loadLeaderboard(){
+  const body = document.getElementById('leaderboardBody');
+  body.innerHTML = '<tr><td colspan="3" class="status-msg">Loading...</td></tr>';
+
+  const { data, error } = await sb
+    .from('leaderboard')
+    .select('wallet_address, total_points')
+    .order('total_points', { ascending: false })
+    .limit(100);
+
+  if (error){
+    console.error(error);
+    body.innerHTML = '<tr><td colspan="3" class="status-msg">Something went wrong loading the leaderboard.</td></tr>';
+    return;
+  }
+
+  if (!data || data.length === 0){
+    body.innerHTML = '<tr><td colspan="3" class="status-msg">No entries yet.</td></tr>';
+    return;
+  }
+
+  body.innerHTML = '';
+  data.forEach((row, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="${rankClass(i)}">${i + 1}</td>
+      <td class="addr">${shortenAddress(row.wallet_address)}</td>
+      <td class="num pts">${row.total_points}</td>
+    `;
+    body.appendChild(tr);
+  });
+}
+
+document.getElementById('refreshBtn').addEventListener('click', loadLeaderboard);
+loadLeaderboard();
+</script>
+</body>
+</html>
