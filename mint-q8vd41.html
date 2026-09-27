@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>MABL Pictures — NFT Mint (Test)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,900|Playfair+Display:400,700">
+<style>
+  :root{
+    --bg:#0d0d0d;
+    --bg-glow: radial-gradient(circle at 20% 0%, rgba(201,169,110,0.10), transparent 45%),
+               radial-gradient(circle at 85% 30%, rgba(201,169,110,0.06), transparent 40%);
+    --card:#161513;
+    --card-border: rgba(201,169,110,0.22);
+    --accent:#c9a96e;
+    --accent-light:#e8c98a;
+    --accent-grad: linear-gradient(135deg, #c9a96e 0%, #e8c98a 100%);
+    --text:#f5f1e8;
+    --muted:rgba(245,241,232,0.55);
+    --danger:#e57373;
+    --success:#8fd19e;
+  }
+  *{box-sizing:border-box;}
+  html{background:var(--bg);}
+  body{
+    margin:0;
+    font-family:'Poppins', Arial, sans-serif;
+    background-color:var(--bg);
+    background-image:var(--bg-glow);
+    color:var(--text);
+    min-height:100vh;
+    padding:40px 16px 80px;
+  }
+  .wrap{max-width:640px;margin:0 auto;}
+  .badge{
+    display:inline-block;
+    background:rgba(229,115,115,0.12);
+    color:var(--danger);
+    font-size:11px;
+    padding:4px 10px;
+    border-radius:999px;
+    margin-bottom:14px;
+    letter-spacing:0.4px;
+  }
+  .logo-row{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .logo-row img{height:44px;width:auto;border-radius:8px;}
+  h1{
+    font-family:'Playfair Display', serif;
+    font-size:32px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    margin:0 0 6px 0;
+    background-image:var(--accent-grad);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  p.sub{color:var(--muted);margin-top:0;margin-bottom:28px;font-size:14px;line-height:1.6;}
+  .card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.35);
+  }
+  .stats-row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;}
+  .stat{flex:1;min-width:110px;}
+  .stat .num{
+    font-family:'Playfair Display', serif;
+    font-size:30px;
+    font-weight:700;
+    background-image:var(--accent-grad);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .stat .lbl{color:var(--muted);font-size:11px;letter-spacing:0.8px;text-transform:uppercase;}
+  .progress-track{
+    width:100%;height:8px;border-radius:999px;
+    background:rgba(255,255,255,0.08);
+    overflow:hidden;margin-bottom:4px;
+  }
+  .progress-fill{height:100%;background-image:var(--accent-grad);border-radius:999px;transition:width 0.3s ease;}
+  .btn{
+    display:inline-block;
+    width:100%;
+    background:var(--accent-grad);
+    color:#181410;
+    font-weight:600;
+    font-family:'Poppins', sans-serif;
+    border:none;
+    border-radius:10px;
+    padding:14px 22px;
+    cursor:pointer;
+    font-size:15px;
+    transition:filter 0.15s ease, transform 0.15s ease;
+  }
+  .btn:hover:not(:disabled){filter:brightness(1.08);}
+  .btn:active:not(:disabled){transform:translateY(1px);}
+  .btn:disabled{opacity:0.45;cursor:default;}
+  .btn.secondary{
+    background:transparent;
+    color:var(--accent);
+    border:1px solid var(--accent);
+  }
+  .wallet-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px;}
+  .addr{
+    font-family:monospace;
+    background:rgba(0,0,0,0.35);
+    padding:6px 10px;
+    border-radius:8px;
+    font-size:13px;
+    word-break:break-all;
+    border:1px solid rgba(201,169,110,0.15);
+  }
+  .status-msg{
+    font-size:13px;
+    line-height:1.6;
+    padding:12px 14px;
+    border-radius:10px;
+    margin-top:14px;
+    display:none;
+  }
+  .status-msg.show{display:block;}
+  .status-msg.info{background:rgba(201,169,110,0.10);color:var(--accent-light);border:1px solid rgba(201,169,110,0.25);}
+  .status-msg.error{background:rgba(229,115,115,0.10);color:var(--danger);border:1px solid rgba(229,115,115,0.25);}
+  .status-msg.success{background:rgba(143,209,158,0.10);color:var(--success);border:1px solid rgba(143,209,158,0.25);}
+  .result-img{width:100%;max-width:280px;border-radius:14px;display:block;margin:14px auto 0;border:1px solid var(--card-border);}
+  a.link{color:var(--accent-light);}
+  .footer-note{color:var(--muted);font-size:11px;text-align:center;margin-top:24px;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">🚧 TEST ENVIRONMENT (Devnet) — not live yet</span>
+  <div class="logo-row">
+    <img src="mabl-logo.jpeg" alt="MABL Pictures" onerror="this.style.display='none'" />
+  </div>
+  <h1>MABL Pictures Character Mint</h1>
+  <p class="sub">Connect your Solana wallet and mint one free MABL Pictures character NFT. Limited supply — one per wallet.</p>
+
+  <div class="card">
+    <div class="stats-row">
+      <div class="stat">
+        <div class="num" id="statMinted">–</div>
+        <div class="lbl">Minted</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="statTotal">–</div>
+        <div class="lbl">Total Supply</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="statRemaining">–</div>
+        <div class="lbl">Remaining</div>
+      </div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div id="preConnect">
+      <button class="btn" id="connectBtn">Connect Phantom Wallet</button>
+    </div>
+
+    <div id="postConnect" style="display:none;">
+      <div class="wallet-row">
+        <span class="addr" id="walletAddr"></span>
+        <button class="btn secondary" id="disconnectBtn" style="width:auto;padding:8px 14px;font-size:13px;">Disconnect</button>
+      </div>
+      <button class="btn" id="mintBtn">Mint for Free (0 SOL)</button>
+    </div>
+
+    <div class="status-msg" id="statusMsg"></div>
+    <img class="result-img" id="resultImg" style="display:none;" />
+  </div>
+
+  <p class="footer-note">
+    MABL Pictures — Season 1 Character Collection · Solana Devnet test build.<br/>
+    Make sure your Phantom wallet network is set to <strong>Devnet</strong> before minting.
+  </p>
+</div>
+
+<script type="module">
+  import { createUmi } from 'https://esm.sh/@metaplex-foundation/umi-bundle-defaults@1.6.0?bundle';
+  import { mplCandyMachine, mintV1, safeFetchCandyMachine } from 'https://esm.sh/@metaplex-foundation/mpl-core-candy-machine@0.3.0?bundle';
+  import { generateSigner, publicKey, some, signerIdentity } from 'https://esm.sh/@metaplex-foundation/umi@1.6.0?bundle';
+  import { createSignerFromWalletAdapter } from 'https://esm.sh/@metaplex-foundation/umi-signer-wallet-adapters@1.6.0?bundle';
+  import { mplCore, safeFetchAssetV1 } from 'https://esm.sh/@metaplex-foundation/mpl-core@1.10.0?bundle';
+
+  // ---------------------------------------------------------------------
+  // CONFIG — currently set to DEVNET for testing.
+  // Before the real public launch, replace these three values with the
+  // MAINNET candy machine / collection created via `mplx cm create --wizard`
+  // on mainnet-beta, and update RPC_ENDPOINT accordingly.
+  // ---------------------------------------------------------------------
+  const RPC_ENDPOINT = 'https://api.devnet.solana.com';
+  const CANDY_MACHINE_ID = 'ARWgK4tNNRghsz8UkuhbW9XCfSDWqxMaoFV88jtHQrBM';
+  const COLLECTION_ID = '4wdJtQHvkymLsdunRw2YDNpoRApXKecmM6AGi4Wtmnf5';
+  const MINT_LIMIT_GUARD_ID = 1; // matches the mintLimit guard id configured on the candy machine
+  const EXPLORER_CLUSTER_QS = '?cluster=devnet'; // remove this on mainnet
+
+  const statMinted = document.getElementById('statMinted');
+  const statTotal = document.getElementById('statTotal');
+  const statRemaining = document.getElementById('statRemaining');
+  const progressFill = document.getElementById('progressFill');
+  const preConnect = document.getElementById('preConnect');
+  const postConnect = document.getElementById('postConnect');
+  const connectBtn = document.getElementById('connectBtn');
+  const disconnectBtn = document.getElementById('disconnectBtn');
+  const mintBtn = document.getElementById('mintBtn');
+  const walletAddr = document.getElementById('walletAddr');
+  const statusMsg = document.getElementById('statusMsg');
+  const resultImg = document.getElementById('resultImg');
+
+  function showStatus(text, type){
+    statusMsg.textContent = text;
+    statusMsg.className = 'status-msg show ' + type;
+  }
+  function clearStatus(){
+    statusMsg.className = 'status-msg';
+    statusMsg.textContent = '';
+  }
+  function shortenAddress(addr){
+    if (!addr || addr.length <= 12) return addr;
+    return addr.slice(0, 6) + '...' + addr.slice(-4);
+  }
+
+  const umi = createUmi(RPC_ENDPOINT).use(mplCandyMachine()).use(mplCore());
+  const candyMachinePk = publicKey(CANDY_MACHINE_ID);
+  const collectionPk = publicKey(COLLECTION_ID);
+
+  let currentCm = null;
+
+  async function refreshStats(){
+    try {
+      const cm = await safeFetchCandyMachine(umi, candyMachinePk);
+      if (!cm) {
+        showStatus('Could not find the candy machine on this network.', 'error');
+        return;
+      }
+      currentCm = cm;
+      const total = Number(cm.data.itemsAvailable);
+      const minted = Number(cm.itemsRedeemed);
+      const remaining = total - minted;
+      statTotal.textContent = total;
+      statMinted.textContent = minted;
+      statRemaining.textContent = remaining;
+      progressFill.style.width = (total > 0 ? (minted / total) * 100 : 0) + '%';
+      if (remaining <= 0) {
+        mintBtn.disabled = true;
+        mintBtn.textContent = 'Sold Out';
+      }
+    } catch (err) {
+      console.error(err);
+      showStatus('Could not load mint stats: ' + (err.message || err), 'error');
+    }
+  }
+
+  function getPhantomProvider(){
+    if (window.phantom && window.phantom.solana && window.phantom.solana.isPhantom) {
+      return window.phantom.solana;
+    }
+    if (window.solana && window.solana.isPhantom) {
+      return window.solana;
+    }
+    return null;
+  }
+
+  let provider = null;
+
+  async function connectWallet(){
+    provider = getPhantomProvider();
+    if (!provider) {
+      showStatus('Phantom wallet not found. Please install the Phantom browser extension.', 'error');
+      window.open('https://phantom.app/', '_blank');
+      return;
+    }
+    try {
+      clearStatus();
+      const resp = await provider.connect();
+      const pubkeyStr = resp.publicKey.toString();
+      walletAddr.textContent = shortenAddress(pubkeyStr);
+      preConnect.style.display = 'none';
+      postConnect.style.display = 'block';
+
+      umi.use(signerIdentity(createSignerFromWalletAdapter(provider)));
+    } catch (err) {
+      console.error(err);
+      showStatus('Wallet connection was cancelled or failed.', 'error');
+    }
+  }
+
+  async function disconnectWallet(){
+    try { if (provider) await provider.disconnect(); } catch (e) {}
+    provider = null;
+    preConnect.style.display = 'block';
+    postConnect.style.display = 'none';
+    resultImg.style.display = 'none';
+    clearStatus();
+  }
+
+  async function mint(){
+    if (!provider) return;
+    mintBtn.disabled = true;
+    mintBtn.textContent = 'Minting…';
+    clearStatus();
+    resultImg.style.display = 'none';
+    showStatus('Please approve the transaction in your Phantom wallet…', 'info');
+
+    try {
+      const asset = generateSigner(umi);
+      await mintV1(umi, {
+        candyMachine: candyMachinePk,
+        asset,
+        collection: collectionPk,
+        mintArgs: {
+          mintLimit: some({ id: MINT_LIMIT_GUARD_ID }),
+        },
+      }).sendAndConfirm(umi);
+
+      const explorerUrl = `https://explorer.solana.com/address/${asset.publicKey}${EXPLORER_CLUSTER_QS}`;
+      showStatus('Success! Your MABL Pictures character NFT has been minted. Loading image…', 'success');
+      statusMsg.innerHTML = `Success! Your MABL Pictures character NFT has been minted. Loading image…<br/><a class="link" href="${explorerUrl}" target="_blank" rel="noopener">View on Solana Explorer →</a>`;
+
+      mintBtn.textContent = 'Minted ✓';
+      await refreshStats();
+
+      // Fetch the newly minted Core asset's on-chain data to get its
+      // metadata URI, then fetch that JSON to get the real image URL.
+      // (Core Assets aren't SPL tokens, so they don't show up under
+      // Phantom's "Collectibles" tab or Explorer's "Tokens" tab yet —
+      // this reads the asset directly so the person can see it here.)
+      try {
+        const mintedAsset = await safeFetchAssetV1(umi, asset.publicKey);
+        if (mintedAsset && mintedAsset.uri) {
+          const metaRes = await fetch(mintedAsset.uri);
+          const meta = await metaRes.json();
+          if (meta && meta.image) {
+            resultImg.src = meta.image;
+            resultImg.alt = meta.name || 'Your MABL Pictures NFT';
+            resultImg.style.display = 'block';
+          }
+          statusMsg.innerHTML = `Success! You minted <strong>${meta && meta.name ? meta.name : 'your MABL Pictures NFT'}</strong>.<br/><a class="link" href="${explorerUrl}" target="_blank" rel="noopener">View on Solana Explorer →</a>`;
+        } else {
+          statusMsg.innerHTML = `Success! Your MABL Pictures character NFT has been minted.<br/><a class="link" href="${explorerUrl}" target="_blank" rel="noopener">View on Solana Explorer →</a>`;
+        }
+      } catch (imgErr) {
+        console.error('Could not load NFT image:', imgErr);
+        statusMsg.innerHTML = `Success! Your MABL Pictures character NFT has been minted.<br/><a class="link" href="${explorerUrl}" target="_blank" rel="noopener">View on Solana Explorer →</a>`;
+      }
+    } catch (err) {
+      console.error(err);
+      let msg = err.message || String(err);
+      if (/already.*mint|mint.*limit/i.test(msg)) {
+        msg = 'This wallet has already minted the maximum allowed (1 per wallet).';
+      } else if (/insufficient/i.test(msg)) {
+        msg = 'Insufficient SOL in your wallet to cover the network fee.';
+      } else if (/sold.?out|no items/i.test(msg)) {
+        msg = 'All NFTs have been minted. Sold out!';
+      }
+      showStatus(msg, 'error');
+      mintBtn.disabled = false;
+      mintBtn.textContent = 'Mint for Free (0 SOL)';
+    }
+  }
+
+  connectBtn.addEventListener('click', connectWallet);
+  disconnectBtn.addEventListener('click', disconnectWallet);
+  mintBtn.addEventListener('click', mint);
+
+  refreshStats();
+</script>
+</body>
+</html>
